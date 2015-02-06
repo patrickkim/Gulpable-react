@@ -1,0 +1,14 @@
+@import "lib/reset";
+
+body {
+  color: $color;
+}
+
+
+#thumb {
+  width: 80px; height: 80px;
+  background: url("#{$image_url}/thumbsup@2x.gif") 0 0 no-repeat;
+  // background: orange;
+
+  transform: scale(0.5);
+}

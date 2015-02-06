@@ -1,0 +1,8 @@
+.DS_Store
+
+# Compiled versions
+dev
+release
+
+# Dependency directory
+node_modules
