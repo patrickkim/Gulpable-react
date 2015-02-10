@@ -20,6 +20,9 @@ class RadComponent extends React.Component
   componentWillUnmount: ->
     false
 
+  shouldComponentUpdate: (nextProps, nextState) ->
+    true
+    
   render: ->
     <div className="rad-component">
       <p>is this component rad? {@props.rad}</p>

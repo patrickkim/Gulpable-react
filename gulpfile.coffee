@@ -22,9 +22,6 @@ gulp.task "clean_styles", ->
 gulp.task "clean_scripts", ->
   del("dev/assets/js")
 
-gulp.task "clean_build", ->
-  del("release")
-
 #HTML
 gulp.task "prep_html", ->
   gulp.src "src/html/*.html"
@@ -41,7 +38,7 @@ gulp.task "styles", ["clean_styles"],  ->
     .pipe gulp.dest("dev/assets/css")
     .pipe notify(message: "Styles task complete")
 
-#vendor scripts
+# Vendor scripts
 gulp.task "vendor_scripts", ->
   gulp.src "src/javascripts/vendor/*.js"
     .pipe(concat("vendor.js"))
@@ -54,7 +51,7 @@ gulp.task "scripts", ["clean_scripts"], ->
       debug: true
       transform: ["coffee-reactify"]
       extensions: [".coffee", ".cjsx"]
-      requires: ["backbone", "underscore", "react"])
+      requires: ["underscore", "immutable", "flux", "react"])
     .pipe concat("bundle.js")
     .pipe gulp.dest("dev/assets/js")
     .pipe notify(message: "Scripts task complete")
@@ -64,6 +61,7 @@ gulp.task "images", ->
   gulp.src "src/images/**/*"
     .pipe cache( image_min(optimizationLevel: 3, progressive: true, interlaced: true) )
     .pipe gulp.dest("dev/assets/images")
+    .pipe cache.clear()
     .pipe notify(message: "Images smushed!")
 
 # Minify your SVG.
@@ -91,9 +89,10 @@ gulp.task "build", ["clean_build"], ->
 
   gulp.src "src/javascripts/index.coffee", { read: false }
     .pipe browserify(
-      transform: ["coffeeify", "hbsfy"]
-      extensions: [".coffee", ".hbs"]
-      requires: ["backbone", "underscore"])
+      debug: true
+      transform: ["coffee-reactify"]
+      extensions: [".coffee", ".cjsx"]
+      requires: ["underscore", "immutable", "flux", "react"])
     .pipe concat("bundle.min.js")
     .pipe uglify()
     .pipe gulp.dest("release/assets")
@@ -107,6 +106,7 @@ gulp.task "build", ["clean_build"], ->
   gulp.src "src/images/**/*"
     .pipe cache( image_min(optimizationLevel: 3, progressive: true, interlaced: true) )
     .pipe gulp.dest("release/assets")
+    .pipe cache.clear()
     .pipe notify(message: "Images ready!")
 
 # Watch
