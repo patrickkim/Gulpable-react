@@ -1,11 +1,13 @@
 React = require "react"
-TestComponent = require "./components/test_component.cjsx"
+SampleComponent = require "./components/sample_component.cjsx"
+AnotherComponent = require "./components/another_component.cjsx"
 
 App =
   initialize: (options) ->
     @_setup_components()
 
   _setup_components: ->
-    React.render <TestComponent rad="work please?" />, $('#application')[0]
+    React.render <SampleComponent another_thing="work please?" />, $('#application')[0]
+    React.render <AnotherComponent />, $('#pip')[0]
 
 module.exports = App

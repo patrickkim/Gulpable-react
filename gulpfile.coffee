@@ -115,5 +115,4 @@ gulp.task 'watch', ->
   gulp.watch 'src/javascripts/**/*', ["scripts"]
   gulp.watch 'src/html/**/*.html', ["prep_html"]
 
-
 gulp.task 'default', ['prep_html', 'styles', 'scripts', 'images', 'svg']
