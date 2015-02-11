@@ -2,7 +2,7 @@ gulp          = require "gulp"
 notify        = require "gulp-notify"
 sourcemaps    = require "gulp-sourcemaps"
 rename        = require "gulp-rename"
-# sass          = require "gulp-sass"
+sass          = require "gulp-sass"
 autoprefixer  = require "gulp-autoprefixer"
 minify_css    = require "gulp-minify-css"
 browserify    = require "gulp-browserify"
@@ -29,14 +29,14 @@ gulp.task "prep_html", ->
 
 # Styles
 gulp.task "styles", ["clean_styles"],  ->
-  # gulp.src "src/stylesheets/development.scss"
-  #   .pipe sourcemaps.init()
-  #   .pipe sass()
-  #   .pipe sourcemaps.write()
-  #   .pipe autoprefixer("last 2 version", "safari 5", "ie 8", "ie 9", "opera 12.1", "ios 6", "android 4")
-  #   .pipe rename("main.css")
-  #   .pipe gulp.dest("dev/assets/css")
-  #   .pipe notify(message: "Styles task complete")
+  gulp.src "src/stylesheets/development.scss"
+    .pipe sourcemaps.init()
+    .pipe sass()
+    .pipe sourcemaps.write()
+    .pipe autoprefixer("last 2 version", "safari 5", "ie 8", "ie 9", "opera 12.1", "ios 6", "android 4")
+    .pipe rename("main.css")
+    .pipe gulp.dest("dev/assets/css")
+    .pipe notify(message: "Styles task complete")
 
 # Vendor scripts
 gulp.task "vendor_scripts", ->

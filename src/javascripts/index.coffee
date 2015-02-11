@@ -1,9 +1,7 @@
 window.App = require "./app"
-keyMirror = require('react/lib/keymirror')
-COLORS = keyMirror(blue: null, red: null)
-
-stores = require "./stores/sample_store"
+Store = require "./stores/sample_store"
 
 $ ->
-  App.initialize()
-  console.log "testing", COLORS
+  # App.initialize()
+  window.SampleStore = Store
+  console.log "test store", SampleStore
