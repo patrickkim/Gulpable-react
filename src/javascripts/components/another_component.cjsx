@@ -2,6 +2,7 @@ React = require "react"
 SampleMixin = require "../mixins/sample_mixin"
 
 AnotherComponent = React.createClass
+
   mixins: [SampleMixin]
 
   getDefaultProps: ->
