@@ -4,7 +4,6 @@
   "description": "coffee, gulp, browserify, sass with backbone & react",
   "main": "index.js",
   "scripts": {
-    "start": "live-server",
     "test": "jest"
   },
   "author": "Patrick Kim",
@@ -38,13 +37,11 @@
     "live-server": "^0.6.3",
     "lodash": "^3.1.0",
     "mocha": "^2.1.0",
+    "object-assign": "^2.0.0",
     "react": "0.13.0-beta.1",
     "should": "^4.6.5",
     "svgo": "^0.5.0",
     "underscore": "^1.7.0"
-  },
-  "scripts": {
-    "test": "jest"
   },
   "jest": {
     "scriptPreprocessor": "preprocessor.js",
