@@ -1,35 +1,24 @@
-{ EventEmitter } = require "events"
-assign = require "object-assign"
-
-Dispatcher = require "../dispatcher/app_dispatcher"
-SampleConstants = require "../constants/sample_constants"
-
-CHANGE_EVENT = "change"
+alt           = require "../utils/alt"
+SampleActions = require "../actions/sample_actions"
+_ = require "lodash"
 
 class SampleStore
-  CHANGE_EVENT: "change"
-  
-  @ping: ->
 
+  constructor: ->
+    # @bindAction(SampleActions.UPVOTE, @onUPVOTE)
+    @bindActions(SampleActions)
 
-SampleStore = assign {}, EventEmitter::, {
+    @stored_data = [100]
 
-  ping: (text) ->
-    console.log "pinging", text
+  onUpvote: (upvote) ->
+    @stored_data.push(upvote)
+    console.log "update me!", @stored_data
 
-  pong: ->
+  # publicly available?
+  @sum: ->
+    _(@_accessor()).reduce (sum, i) -> sum + i
 
+  @_accessor: ->
+    @getState().stored_data
 
-  emitChange: ->
-    @emit CHANGE_EVENT
-
-}
-
-Dispatcher.register (action) ->
-  switch action.actionType
-    when SampleConstants.PING
-      SampleStore.ping("HI")
-    when SampleConstants.PING
-      SampleStore.pong("HI")
-
-module.exports = SampleStore
+module.exports = alt.createStore(SampleStore, "HelloMom")

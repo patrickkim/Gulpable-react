@@ -1,8 +1,6 @@
 React = require "react"
-Dispatcher = require "../dispatcher/app_dispatcher"
 SampleStore = require "../stores/sample_store"
-SampleActions = require "../stores/sample_store"
-
+SampleActions = require "../actions/sample_actions"
 
 class SampleComponent extends React.Component
 
@@ -19,33 +17,31 @@ class SampleComponent extends React.Component
 
   # Set default state
   constructor: (props) ->
-    @state = { count: props.initial_count }
+    @state = { sum:  SampleStore.sum() }
+    console.log "with state:", @state
 
-  increment_count: =>
-    console.log @state
-    @setState(count: @state.count + 1)
+  componentDidMount: ->
+    SampleStore.listen(@onChange)
 
-  ping: =>
-    SampleStore.ping()
+  componentWillUnmount: ->
+    SampleStore.unlisten(@onChange)
 
-# Drop in when using immutable.
-# shouldComponentUpdate: (nextProps, nextState) ->
-#
+  # componentWillMount: ->
 
-  componentWillMount: ->
-    console.log "oyoooo", @state
-    console.log "about to mount get your shit together!", @props
+  # Drop in when using immutable.
+  # shouldComponentUpdate: (nextProps, nextState) ->
 
-  # componentDidMount: ->
-  #   SampleStore.addChangeListener(@_onChange);
-  #
-  # componentWillUnmount: ->
-  #   SampleStore.removeChanceListener(@_onChange)
+  onChange: =>
+    @setState(sum: SampleStore.sum())
+
+  upvote: ->
+    SampleActions.upvote(1)
+
 
   render: ->
     <div className="sample-component">
-      <div id="thumb" onClick={@ping}></div>
-      <p>Propertys: {@props.another_thing} or {@state.count} || State: {@state.count} </p>
+      <div id="thumb" onClick={@upvote}></div>
+      <p>Votes: {@state.sum} </p>
     </div>
 
 module.exports = SampleComponent

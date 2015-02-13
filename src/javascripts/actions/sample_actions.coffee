@@ -1,16 +1,11 @@
-Dispatcher = require "../dispatcher/app_dispatcher"
-SampleConstants = require "../dispatcher/sample_constants"
+alt = require "../utils/alt"
 
 class SampleActions
-  @ping: (text) ->
-    Dispatcher.dispatch
-      actionType: SampleConstants.PING
-      text: text
-    return
 
-  @pong: ->
-    Dispatcher.dispatch
-      actionType: SampleConstants.PONG
-      pong: { value: "pong" }
+  constructor: ->
+    @generateActions "upvote", "update"
 
-module.exports = SampleActions
+  # upvote: (text) ->
+  #   @dispatch(text)
+
+module.exports = alt.createActions(SampleActions)
