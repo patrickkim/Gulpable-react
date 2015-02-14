@@ -44,5 +44,9 @@
       "coffee",
       "js"
     ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/patrickkim/Gulpable-react"
   }
 }
