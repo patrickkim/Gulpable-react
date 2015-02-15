@@ -29,13 +29,13 @@ gulp.task "html", ->
 
 # Styles
 gulp.task "css",  ->
-  gulp.src "src/stylesheets/development.scss"
+  gulp.src "src/stylesheets/env/development.scss"
     .pipe sourcemaps.init()
     .pipe plumber()
     .pipe sass()
-    .pipe sourcemaps.write()
     .pipe autoprefixer("last 2 version", "ie 9")
-    .pipe rename("main.css")
+    .pipe sourcemaps.write()
+    .pipe rename("app.css")
     .pipe gulp.dest("dev/assets/css")
     .pipe notify(message: "Styles task complete")
 
@@ -77,11 +77,11 @@ gulp.task "release", ["clean_build"], ->
     .pipe gulp.dest("release")
     .pipe notify(message: "HTML ready!")
 
-  gulp.src "src/stylesheets/production.scss"
+  gulp.src "src/stylesheets/env/production.scss"
     .pipe sass()
     .pipe autoprefixer("last 2 version", "safari 5", "ie 8", "ie 9", "opera 12.1", "ios 6", "android 4")
     .pipe minify_css()
-    .pipe rename("main.min.css")
+    .pipe rename("app.min.css")
     .pipe gulp.dest("release/assets")
     .pipe notify(message: "Styles build complete")
 
