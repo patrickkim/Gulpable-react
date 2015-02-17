@@ -2,9 +2,8 @@ gulp         = require "gulp"
 notify       = require "gulp-notify"
 sourcemaps   = require "gulp-sourcemaps"
 rename       = require "gulp-rename"
-sass         = require "gulp-sass"
+stylus       = require "gulp-stylus"
 autoprefixer = require "gulp-autoprefixer"
-minify_css   = require "gulp-minify-css"
 browserify   = require "gulp-browserify"
 uglify       = require "gulp-uglify"
 concat       = require "gulp-concat"
@@ -22,6 +21,9 @@ gulp.task "clean_styles", ->
 gulp.task "clean_scripts", ->
   del("dev/assets/js")
 
+gulp.task "clean_build", ->
+  del("release")
+
 #HTML
 gulp.task "html", ->
   gulp.src "src/html/*.html"
@@ -29,10 +31,10 @@ gulp.task "html", ->
 
 # Styles
 gulp.task "css",  ->
-  gulp.src "src/stylesheets/env/development.scss"
+  gulp.src "src/stylesheets/_development.styl"
     .pipe sourcemaps.init()
     .pipe plumber()
-    .pipe sass()
+    .pipe stylus()
     .pipe autoprefixer("last 2 version", "ie 9")
     .pipe sourcemaps.write()
     .pipe rename("app.css")
@@ -77,10 +79,9 @@ gulp.task "release", ["clean_build"], ->
     .pipe gulp.dest("release")
     .pipe notify(message: "HTML ready!")
 
-  gulp.src "src/stylesheets/env/production.scss"
-    .pipe sass()
+  gulp.src "src/stylesheets/_production.styl"
+    .pipe stylus( compress: true )
     .pipe autoprefixer("last 2 version", "safari 5", "ie 8", "ie 9", "opera 12.1", "ios 6", "android 4")
-    .pipe minify_css()
     .pipe rename("app.min.css")
     .pipe gulp.dest("release/assets")
     .pipe notify(message: "Styles build complete")
